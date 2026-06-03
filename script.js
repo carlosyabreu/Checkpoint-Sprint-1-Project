@@ -1,12 +1,35 @@
-// This is a placeholder file which shows how you can access functions defined in other files.
-// It can be loaded into index.html.
-// You can delete the contents of the file once you have understood how it works.
-// Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
-// You can't open the index.html file using a file:// URL.
-
-import { getUserIds } from "./storage.js";
+import { getUserIds, getBookmarksForUser } from "./storage.js";
 
 window.onload = function () {
   const users = getUserIds();
-  document.querySelector("body").innerText = `There are ${users.length} users`;
+  const select = document.getElementById("user-select");
+
+  // populate the dropdown
+  users.forEach(userId => {
+    const option = document.createElement("option");
+    option.value = userId;
+    option.textContent = userId;
+    select.appendChild(option);
+  });
+
+  // listen for selection changes
+  select.addEventListener("change", function () {
+    loadBookmarksForUser(this.value);
+  });
+
+  // load initial state for the first user 
+  if (users.length > 0) loadBookmarksForUser(users[0]);
 };
+
+function loadBookmarksForUser(userId) {
+  const bookmarks = getBookmarksForUser(userId);
+  const container = document.getElementById("bookmarks-container");
+
+  if (!bookmarks || bookmarks.length === 0) {
+    container.innerHTML = "No bookmarks for this user yet. Get started below!;
+  } else {
+    container.innerHTML = bookmarks
+      .map(b => `<li><a href="${b.url}">${b.title}</a></li>`)
+      .join("");
+  }
+}
