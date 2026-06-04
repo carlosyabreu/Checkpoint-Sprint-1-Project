@@ -3,8 +3,111 @@
   <head>
     <title>Bookmarks</title>
     <script type="module" src="script.js"></script>
+    <css href="style.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Bookmarks</h1>
+    <p>
+      <!-- there are currently [x] users -->  
+       <script type="module" src="script.js"></script>  
+       <!-- drop down list displaying 5 users -->
+     </p>
+     <p> 
+    <table>
+      <tr>
+        <td>
+          <label for="users"><b>Display</b></label>
+            <select id="users" name="users">
+              <option value="user1" selected>User 1</option>
+              <option value="user2">User 2</option>
+              <option value="user3">User 3</option>
+              <option value="user4">User 4</option>
+              <option value="user5">User 5</option>
+            </select>
+        </td>
+        <td><b>'s bookmarks</b></td>
+      </tr>
+    </table>
+   </p> 
+     
+    <p>
+      <h2>Bookmarks from [selectedUser]</h2>
+      <!-- bookmarks from selectedUser will be displayed here -->
+       <!-- display a message if there are no bookmarks by selectedUser -->
+        [selectedUser] hasn't logged any bookmarks yet! Get started below...
+    </p>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>
+      <h2>Log a new bookmark</h2>
+      <!-- form for creating a new bookmark will be displayed here -->  
+<table width="80%">
+  <form action="" method="get" class="addBookmarkForm"></form>
+  <tr>
+    <td colspan="2">
+
+  <div class="addBookmarkForm">
+
+    <label for="users"><b>Add a bookmark for:</b></label>
+            <select id="users" name="users">
+              <option value="user1" selected>User 1</option>
+              <option value="user2">User 2</option>
+              <option value="user3">User 3</option>
+              <option value="user4">User 4</option>
+              <option value="user5">User 5</option>
+            </select>
+            </div>
+            
+  </div>
+  </td>
+  </tr>
+
+  <tr>
+    <td>
+  <div class="addBookmarkURL">
+    <label for="URL">Address (URL): </label>
+    <input type="URL" name="URL" id="URL" required />
+  </div>
+  </td>
+  <td>
+   <div class="addBookmarkTitle">
+    <label for="title">Title: </label>
+    <input type="text" name="title" id="title" required />
+  </div>
+</td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+  <div class="addBookmarkDescription">
+    <label for="description">Description: </label>
+    <textarea name="description" rows="10" cols="80" id="description" required></textarea>
+  </div>
+  </td>
+  </tr>
+
+  <tr>
+    <td>
+  <div class="addBookmarkForm">
+    <input type="submit" value="Add Bookmark!" />
+  </div>
+  </td>
+
+  <!-- not sure if we need this button or not
+  <td> 
+  <div class="clearForm">
+    <input type="reset" value="Clear form" />
+  </div>
+  </td>
+  -->
+
+  </tr>
+
+</form>
+</table>
+</p>
+
   </body>
 </html>
