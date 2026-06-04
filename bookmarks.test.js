@@ -6,7 +6,6 @@ import {
     incrementLike, 
     getLikeCount,
     isValidUrl,
-    copyToClipboard,
     getUserBookmarks,
     saveUserBookmarks
 } from "./script.js";
@@ -90,18 +89,28 @@ test("Add bookmark throws error when URL or title missing", () => {
     }, /URL and title are required/);
 });
 
-// Task 1.4: Test like counter increment
-test("Increment like increases like count by 1", () => {
+// Task 1.4: Test like counter increment - increases from 0 to 1 to 2
+test("Increment like increases like count from 0 to 1 to 2", () => {
     const userId = "1";
     const bookmark = addBookmark(userId, "https://example.com", "Test", "Desc");
     
+    // Initial like count should be 0
     assert.equal(getLikeCount(userId, bookmark.id), 0);
     
-    incrementLike(userId, bookmark.id);
+    // First increment: 0 -> 1
+    const firstIncrement = incrementLike(userId, bookmark.id);
+    assert.equal(firstIncrement, 1);
     assert.equal(getLikeCount(userId, bookmark.id), 1);
     
-    incrementLike(userId, bookmark.id);
+    // Second increment: 1 -> 2
+    const secondIncrement = incrementLike(userId, bookmark.id);
+    assert.equal(secondIncrement, 2);
     assert.equal(getLikeCount(userId, bookmark.id), 2);
+    
+    // Third increment: 2 -> 3
+    const thirdIncrement = incrementLike(userId, bookmark.id);
+    assert.equal(thirdIncrement, 3);
+    assert.equal(getLikeCount(userId, bookmark.id), 3);
 });
 
 // Task 1.4: Test like persistence across sessions (simulated)
@@ -166,5 +175,50 @@ test("Get like count returns 0 for non-existent bookmark", () => {
     const userId = "1";
     const likeCount = getLikeCount(userId, "non-existent");
     assert.equal(likeCount, 0);
+});
+
+// Task 1.4: Test like counter updates correctly with multiple bookmarks
+test("Like counter works independently for multiple bookmarks", () => {
+    const userId = "1";
+    const bookmark1 = addBookmark(userId, "https://example1.com", "Bookmark 1", "Desc 1");
+    const bookmark2 = addBookmark(userId, "https://example2.com", "Bookmark 2", "Desc 2");
+    
+    // Like bookmark1 twice
+    incrementLike(userId, bookmark1.id);
+    incrementLike(userId, bookmark1.id);
+    
+    // Like bookmark2 once
+    incrementLike(userId, bookmark2.id);
+    
+    assert.equal(getLikeCount(userId, bookmark1.id), 2);
+    assert.equal(getLikeCount(userId, bookmark2.id), 1);
+});
+
+// Task 1.4: Test timestamp order is preserved when adding multiple bookmarks
+test("Newest bookmarks appear first when added in sequence", () => {
+    const userId = "1";
+    
+    // Add bookmarks in order
+    const bookmark1 = addBookmark(userId, "https://first.com", "First", "First description");
+    
+    // Small delay to ensure different timestamps
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    
+    // Use async test for delays
+    return delay(10).then(() => {
+        const bookmark2 = addBookmark(userId, "https://second.com", "Second", "Second description");
+        
+        return delay(10).then(() => {
+            const bookmark3 = addBookmark(userId, "https://third.com", "Third", "Third description");
+            
+            const sorted = getBookmarksReverseChronological(userId);
+            
+            assert.equal(sorted.length, 3);
+            // Most recent should be first
+            assert.equal(sorted[0].title, "Third");
+            assert.equal(sorted[1].title, "Second");
+            assert.equal(sorted[2].title, "First");
+        });
+    });
 });
 
