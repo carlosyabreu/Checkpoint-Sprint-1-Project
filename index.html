@@ -1,115 +1,174 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Bookmarks</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Shared bookmarks</title>
+    <style>
+      /* Minimal styling - focus on functionality */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 8px 16px;
+        cursor: pointer;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .bookmark {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+      .bookmark-title {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+      }
+      .bookmark-description {
+        color: #666;
+        margin-bottom: 5px;
+      }
+      .bookmark-timestamp {
+        font-size: 0.8em;
+        color: #999;
+        margin-bottom: 10px;
+      }
+      .bookmark-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .like-button {
+        background: #dc3545;
+      }
+      .like-button:hover {
+        background: #c82333;
+      }
+      .copy-button {
+        background: #28a745;
+      }
+      .copy-button:hover {
+        background: #218838;
+      }
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .empty-message {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+        background: #f9f9f9;
+        border-radius: 4px;
+      }
+      h2 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+    </style>
     <script type="module" src="script.js"></script>
-    <css href="style.css" rel="stylesheet">
   </head>
   <body>
-    <p>
-      <!-- there are currently [x] users -->  
-       <script type="module" src="script.js"></script>  
-     </p>
-     <p> 
-      <!-- drop down list displaying 5 users -->
-    <table>
-      <tr>
-        <td>
-          <label for="users"><b>Display</b></label>
-            <select id="users" name="users">
-              <option value="user1" selected>User 1</option>
-              <option value="user2">User 2</option>
-              <option value="user3">User 3</option>
-              <option value="user4">User 4</option>
-              <option value="user5">User 5</option>
-            </select>
-        </td>
-        <td><b>'s bookmarks</b></td>
-      </tr>
-    </table>
-   </p> 
-     
-    <p>
-      <h2>Bookmarks from [selectedUser]</h2>
-      <!-- bookmarks from selectedUser will be displayed here -->
-       <!-- display a message if there are no bookmarks by selectedUser -->
-        [selectedUser] hasn't logged any bookmarks yet! Get started below...
-    </p>
+    <h1>Shared bookmarks</h1>
 
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+    <!-- User dropdown -->
+    <div class="form-group">
+      <label for="userSelect">Select user:</label>
+      <select
+        id="userSelect"
+        aria-label="Select user to view their bookmarks">
+        <option value="">Loading users...</option>
+        <option value="user1">User 1</option>
+        <option value="user2">User 2</option>
+        <option value="user3">User 3</option>
+        <option value="user4">User 4</option>
+        <option value="user5">User 5</option>
+      </select>
+    </div>
+
+    <!-- Bookmark list container -->
+    <div id="bookmarksContainer" aria-live="polite">
+      <!-- Bookmarks will be rendered here -->
+    </div>
+
+    <!-- Form for adding bookmarks -->
+    <!-- In footer so that it remains in view, however long the bookmarks page may become -->
     <footer>
-    <p>
-      <h2>Log a new bookmark</h2>
-      <!-- form for creating a new bookmark will be displayed here -->  
-<table width="80%">
-  <form action="" method="get" class="addBookmarkForm"></form>
-  <tr>
-    <td colspan="2">
+      <h2>Add new bookmark</h2>
+      <form
+        id="bookmarkForm"
+        aria-label="Add new bookmark form">
+        <div class="form-group">
+          <label for="urlInput">URL:</label>
+          <input
+            type="url"
+            id="urlInput"
+            name="url"
+            required
+            placeholder="https://example.com"
+            aria-required="true" />
+        </div>
 
-  <div class="addBookmarkForm">
+        <div class="form-group">
+          <label for="titleInput">Title:</label>
+          <input
+            type="text"
+            id="titleInput"
+            name="title"
+            required
+            placeholder="Bookmark title"
+            aria-required="true" />
+        </div>
 
-    <label for="users"><b>Add a bookmark for:</b></label>
-            <select id="users" name="users">
-              <option value="user1" selected>User 1</option>
-              <option value="user2">User 2</option>
-              <option value="user3">User 3</option>
-              <option value="user4">User 4</option>
-              <option value="user5">User 5</option>
-            </select>
-            </div>
-            
-  </div>
-  </td>
-  </tr>
+        <div class="form-group">
+          <label for="descriptionInput">Description:</label>
+          <textarea
+            id="descriptionInput"
+            name="description"
+            rows="3"
+            placeholder="Enter description"
+            aria-required="true"></textarea>
+        </div>
 
-  <tr>
-    <td>
-  <div class="addBookmarkURL">
-    <label for="URL">Address (URL): </label>
-    <input type="URL" name="URL" id="URL" required />
-  </div>
-  </td>
-  <td>
-   <div class="addBookmarkTitle">
-    <label for="title">Title: </label>
-    <input type="text" name="title" id="title" required />
-  </div>
-</td>
-  </tr>
-
-  <tr>
-    <td colspan="2">
-  <div class="addBookmarkDescription">
-    <label for="description">Description: </label>
-    <textarea name="description" rows="10" cols="80" id="description" required></textarea>
-  </div>
-  </td>
-  </tr>
-
-  <tr>
-    <td>
-  <div class="addBookmarkForm">
-    <input type="submit" value="Add Bookmark!" />
-  </div>
-  </td>
-
-  <!-- not sure if we need this button or not
-  <td> 
-  <div class="clearForm">
-    <input type="reset" value="Clear form" />
-  </div>
-  </td>
-  -->
-
-  </tr>
-
-</form>
-</table>
-</p>
-</footer>
-
+        <button type="submit">Add Bookmark</button>
+      </form>
+    </footer>
   </body>
 </html>
