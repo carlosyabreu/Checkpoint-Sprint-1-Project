@@ -1,7 +1,12 @@
 {
-  "name": "project-shared-bookmarks",
+  "name": "shared-bookmarks",
   "version": "1.0.0",
+  "description": "Shared bookmarks application",
+  "type": "module",
   "scripts": {
-    "test": "node example.test.js"
+    "test": "node --test bookmarks.test.js"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
   }
 }
