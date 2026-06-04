@@ -130,45 +130,44 @@
 
     <!-- Form for adding bookmarks -->
     <!-- In footer so that it remains in view, however long the bookmarks page may become -->
-    <footer>
-      <h2>Add new bookmark</h2>
-      <form
-        id="bookmarkForm"
-        aria-label="Add new bookmark form">
-        <div class="form-group">
-          <label for="urlInput">URL:</label>
-          <input
-            type="url"
-            id="urlInput"
-            name="url"
-            required
-            placeholder="https://example.com"
-            aria-required="true" />
-        </div>
 
-        <div class="form-group">
-          <label for="titleInput">Title:</label>
-          <input
-            type="text"
-            id="titleInput"
-            name="title"
-            required
-            placeholder="Bookmark title"
-            aria-required="true" />
-        </div>
+    <h2>Add new bookmark</h2>
+    <form
+      id="bookmarkForm"
+      aria-label="Add new bookmark form">
+      <div class="form-group">
+        <label for="urlInput">URL:</label>
+        <input
+          type="url"
+          id="urlInput"
+          name="url"
+          required
+          placeholder="https://example.com"
+          aria-required="true" />
+      </div>
 
-        <div class="form-group">
-          <label for="descriptionInput">Description:</label>
-          <textarea
-            id="descriptionInput"
-            name="description"
-            rows="3"
-            placeholder="Enter description"
-            aria-required="true"></textarea>
-        </div>
+      <div class="form-group">
+        <label for="titleInput">Title:</label>
+        <input
+          type="text"
+          id="titleInput"
+          name="title"
+          required
+          placeholder="Bookmark title"
+          aria-required="true" />
+      </div>
 
-        <button type="submit">Add Bookmark</button>
-      </form>
-    </footer>
+      <div class="form-group">
+        <label for="descriptionInput">Description:</label>
+        <textarea
+          id="descriptionInput"
+          name="description"
+          rows="3"
+          placeholder="Enter description"
+          aria-required="true"></textarea>
+      </div>
+
+      <button type="submit">Add bookmark</button>
+    </form>
   </body>
 </html>
