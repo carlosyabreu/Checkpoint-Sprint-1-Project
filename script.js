@@ -124,7 +124,7 @@ function renderBookmarks(userId) {
     
     // Task 2.2: Handle empty state
     if (!bookmarks || bookmarks.length === 0) {
-        container.innerHTML = '<div class="empty-message" role="status">No bookmarks yet. Add your first bookmark above!</div>';
+        container.innerHTML = '<div class="empty-message" role="status">No bookmarks yet. Add your first bookmark below!</div>';
         return;
     }
     
